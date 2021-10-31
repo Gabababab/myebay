@@ -10,6 +10,13 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 
+import it.prova.myebay.model.Ruolo;
+import it.prova.myebay.model.StatoUtente;
+import it.prova.myebay.model.Utente;
+import it.prova.myebay.service.MyServiceFactory;
+import it.prova.myebay.service.ruolo.RuoloService;
+import it.prova.myebay.service.utente.UtenteService;
+
 
 @WebListener
 public class LocalEntityManagerFactoryListener implements ServletContextListener {
