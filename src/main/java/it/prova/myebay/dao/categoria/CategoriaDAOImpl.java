@@ -4,8 +4,10 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
 
 import it.prova.myebay.model.Categoria;
+import it.prova.myebay.model.Ruolo;
 
 public class CategoriaDAOImpl implements CategoriaDAO{
 
@@ -49,6 +51,16 @@ public class CategoriaDAOImpl implements CategoriaDAO{
 	@Override
 	public void setEntityManager(EntityManager entityManager) {
 		this.entityManager=entityManager;
+	}
+
+	@Override
+	public Categoria findByDescrizioneAndCodice(String descrizione, String codice) throws Exception {
+		TypedQuery<Categoria> query = entityManager
+				.createQuery("select c from Categoria c where c.descrizione=?1 and c.codice=?2", Categoria.class)
+				.setParameter(1, descrizione)
+				.setParameter(2, codice);
+		
+		return query.getResultStream().findFirst().orElse(null);
 	}
 
 }

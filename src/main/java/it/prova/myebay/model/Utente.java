@@ -43,15 +43,15 @@ public class Utente {
 	@Enumerated(EnumType.STRING)
 	private StatoUtente stato = StatoUtente.CREATO;
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "utente")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "utenteInserimento")
 	private Set<Annuncio> annunci= new HashSet<Annuncio>(0);
 	
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "utente")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "utenteAcquirente")
 	private Set<Acquisto> acquisti= new HashSet<Acquisto>(0);
 	
 	@ManyToMany
 	@JoinTable(name = "utente_ruolo", joinColumns = @JoinColumn(name = "utente_id", referencedColumnName = "ID"), inverseJoinColumns = @JoinColumn(name = "ruolo_id", referencedColumnName = "ID"))
-	private Set<Ruolo> ruoli = new HashSet<>(0);
+	private Set<Ruolo> ruoli = new HashSet<Ruolo>(0);
 
 	public Utente() {
 	}
@@ -67,6 +67,17 @@ public class Utente {
 		this.password = password;
 		this.nome = nome;
 		this.cognome = cognome;
+		this.dateCreated = dateCreated;
+	}
+
+	public Utente(String username, String password, String nome, String cognome, Integer creditoResiduo,
+			Date dateCreated) {
+		super();
+		this.username = username;
+		this.password = password;
+		this.nome = nome;
+		this.cognome = cognome;
+		this.creditoResiduo = creditoResiduo;
 		this.dateCreated = dateCreated;
 	}
 
@@ -158,4 +169,10 @@ public class Utente {
 		return false;
 	}
 
+	public boolean isLogged() {
+		if(this.id==null)
+			return false;
+		
+		return true;
+	}
 }

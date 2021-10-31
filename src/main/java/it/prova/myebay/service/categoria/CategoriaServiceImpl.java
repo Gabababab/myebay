@@ -130,4 +130,23 @@ public class CategoriaServiceImpl implements CategoriaService{
 	public void setCategoriaDAO(CategoriaDAO categoriaDAO) {
 		this.categoriaDAO = categoriaDAO;
 	}
+
+	@Override
+	public Categoria cercaPerDescrizioneECodice(String descrizione, String codice) throws Exception {
+		EntityManager entityManager = LocalEntityManagerFactoryListener.getEntityManager();
+
+		try {
+			// uso l'injection per il dao
+			categoriaDAO.setEntityManager(entityManager);
+
+			// eseguo quello che realmente devo fare
+			return categoriaDAO.findByDescrizioneAndCodice(descrizione, codice);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			LocalEntityManagerFactoryListener.closeEntityManager(entityManager);
+		}
+	}
 }

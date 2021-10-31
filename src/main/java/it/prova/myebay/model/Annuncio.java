@@ -42,12 +42,58 @@ public class Annuncio {
 	@JoinTable(name = "annuncio_categoria", joinColumns = @JoinColumn(name = "annuncio_id", referencedColumnName = "ID"), inverseJoinColumns = @JoinColumn(name = "categoria_id", referencedColumnName = "ID"))
 	private Set<Categoria> categorie= new HashSet<Categoria>();
 
+	
+	public Annuncio() {
+		super();
+	}
+	
+	
+
+	public Annuncio(String testoAnnuncio, Integer prezzo, Date dataPubblicazione, Boolean aperto,
+			Utente utenteInserimento, Set<Categoria> categorie) {
+		super();
+		this.testoAnnuncio = testoAnnuncio;
+		this.prezzo = prezzo;
+		this.dataPubblicazione = dataPubblicazione;
+		this.aperto = aperto;
+		this.utenteInserimento = utenteInserimento;
+		this.categorie = categorie;
+	}
+
+
+
+	public Annuncio(String testoAnnuncio, Integer prezzo, Date dataPubblicazione, Boolean aperto,
+			Utente utenteInserimento) {
+		super();
+		this.testoAnnuncio = testoAnnuncio;
+		this.prezzo = prezzo;
+		this.dataPubblicazione = dataPubblicazione;
+		this.aperto = aperto;
+		this.utenteInserimento = utenteInserimento;
+	}
+
+
+
+	public Annuncio(String testoAnnuncio, Integer prezzo) {
+		super();
+		this.testoAnnuncio = testoAnnuncio;
+		this.prezzo = prezzo;
+	}
+
+
 	public Annuncio(String testoAnnuncio, Integer prezzo, Date dataPubblicazione) {
 		super();
 		this.testoAnnuncio = testoAnnuncio;
 		this.prezzo = prezzo;
 		this.dataPubblicazione = dataPubblicazione;
 	}
+
+	public Annuncio(String testoInputParam, Integer prezzoInputParam, Utente utenteParam,
+			Set<Categoria> categorieParam) {
+		// TODO Auto-generated constructor stub
+	}
+
+
 
 	public Long getId() {
 		return id;

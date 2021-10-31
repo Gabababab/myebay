@@ -30,4 +30,59 @@ public class Acquisto {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "utente_id", nullable = false)
 	private Utente utenteAcquirente;
+
+	
+	public Acquisto() {
+		super();
+	}
+
+	public Acquisto(String descrizione, Integer prezzo, Date dataAcquisto, Utente utenteAcquirente) {
+		super();
+		this.descrizione = descrizione;
+		this.prezzo = prezzo;
+		this.dataAcquisto = dataAcquisto;
+		this.utenteAcquirente = utenteAcquirente;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getDescrizione() {
+		return descrizione;
+	}
+
+	public void setDescrizione(String descrizione) {
+		this.descrizione = descrizione;
+	}
+
+	public Integer getPrezzo() {
+		return prezzo;
+	}
+
+	public void setPrezzo(Integer prezzo) {
+		this.prezzo = prezzo;
+	}
+
+	public Date getDataAcquisto() {
+		return dataAcquisto;
+	}
+
+	public void setDataAcquisto(Date dataAcquisto) {
+		this.dataAcquisto = dataAcquisto;
+	}
+
+	public Utente getUtenteAcquirente() {
+		return utenteAcquirente;
+	}
+
+	public void setUtenteAcquirente(Utente utenteAcquirente) {
+		this.utenteAcquirente = utenteAcquirente;
+	}
+	
+	
 }

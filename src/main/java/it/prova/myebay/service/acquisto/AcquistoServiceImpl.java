@@ -8,6 +8,7 @@ import it.prova.myebay.dao.acquisto.AcquistoDAO;
 import it.prova.myebay.model.Acquisto;
 import it.prova.myebay.web.listener.LocalEntityManagerFactoryListener;
 
+
 public class AcquistoServiceImpl implements AcquistoService{
 
 	private AcquistoDAO acquistoDAO;

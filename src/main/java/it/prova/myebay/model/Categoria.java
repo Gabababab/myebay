@@ -28,6 +28,10 @@ public class Categoria {
 	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "categorie")
 	private Set<Annuncio> annunci = new HashSet<Annuncio>();
 
+	public Categoria() {
+		super();
+	}
+
 	public Categoria(String descrizione, String codice) {
 		super();
 		this.descrizione = descrizione;
