@@ -92,25 +92,6 @@ public class LocalEntityManagerFactoryListener implements ServletContextListener
 			categoriaServiceInstance.inserisciNuovo(new Categoria("Abbigliamento", "CAT2"));
 		}
 		
-		if(annuncioServiceInstance.findByDescrizioneAndPrezzo("Computer portatile", 400) == null) {
-			
-			Utente utenteTmp=MyServiceFactory.getUtenteServiceInstance().caricaSingoloElemento(1L);
-			Categoria categoriaTmp=MyServiceFactory.getCategoriaServiceInstance().caricaSingoloElemento(1L);
-			Annuncio annuncio=new Annuncio("Computer portatile", 400, new Date(), true, utenteTmp);
-			
-			annuncio.getCategorie().add(categoriaTmp);
-			annuncioServiceInstance.inserisciNuovo(annuncio);
-		}
-		
-		if(annuncioServiceInstance.findByDescrizioneAndPrezzo("Giacca di pelle", 40)==null) {
-			
-			Utente utenteTmp=MyServiceFactory.getUtenteServiceInstance().caricaSingoloElemento(1L);
-			Categoria categoriaTmp=MyServiceFactory.getCategoriaServiceInstance().caricaSingoloElemento(2L);
-			Annuncio annuncio=new Annuncio("Giacca di pelle", 40, new Date(), true, utenteTmp);
-			annuncio.getCategorie().add(categoriaTmp);
-			annuncioServiceInstance.inserisciNuovo(annuncio);
-		}
-
 		if (utenteServiceInstance.findByUsernameAndPassword("admin", "admin") == null) {
 			Utente admin = new Utente("admin", "admin", "Mario", "Rossi", 1000, new Date());
 			admin.setStato(StatoUtente.ATTIVO);

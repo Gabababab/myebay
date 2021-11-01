@@ -19,7 +19,8 @@ import it.prova.myebay.model.Utente;
 public class CheckAuthFilter implements Filter {
 
 	private static final String HOME_PATH = "";
-	private static final String[] EXCLUDED_URLS = {"/login.jsp","/LoginServlet","/LogoutServlet","/assets/", "/homepage.jsp"};
+	private static final String[] EXCLUDED_URLS = {"/login.jsp","/LoginServlet","/LogoutServlet","/assets/", "/homepage.jsp", "/ExecuteSearchAnnuncioServlet",  "/ExecuteListAnnuncioServlet"};
+	
 	private static final String[] PROTECTED_URLS = {"/admin/"};
 
 	public CheckAuthFilter() {

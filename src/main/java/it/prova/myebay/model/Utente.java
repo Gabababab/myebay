@@ -44,14 +44,14 @@ public class Utente {
 	private StatoUtente stato = StatoUtente.CREATO;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "utenteInserimento")
-	private Set<Annuncio> annunci= new HashSet<Annuncio>(0);
+	private Set<Annuncio> annunci= new HashSet<Annuncio>();
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "utenteAcquirente")
-	private Set<Acquisto> acquisti= new HashSet<Acquisto>(0);
+	private Set<Acquisto> acquisti= new HashSet<Acquisto>();
 	
 	@ManyToMany
 	@JoinTable(name = "utente_ruolo", joinColumns = @JoinColumn(name = "utente_id", referencedColumnName = "ID"), inverseJoinColumns = @JoinColumn(name = "ruolo_id", referencedColumnName = "ID"))
-	private Set<Ruolo> ruoli = new HashSet<Ruolo>(0);
+	private Set<Ruolo> ruoli = new HashSet<Ruolo>();
 
 	public Utente() {
 	}

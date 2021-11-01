@@ -88,9 +88,12 @@ public class Annuncio {
 		this.dataPubblicazione = dataPubblicazione;
 	}
 
-	public Annuncio(String testoInputParam, Integer prezzoInputParam, Utente utenteParam,
-			Set<Categoria> categorieParam) {
-		// TODO Auto-generated constructor stub
+	public Annuncio(String testoAnnuncio, Integer prezzo, Utente utenteInserimento, Set<Categoria> categorie) {
+		super();
+		this.testoAnnuncio = testoAnnuncio;
+		this.prezzo = prezzo;
+		this.utenteInserimento = utenteInserimento;
+		this.categorie = categorie;
 	}
 
 

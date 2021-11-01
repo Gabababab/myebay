@@ -17,6 +17,11 @@ import it.prova.myebay.model.Categoria;
 public class AnnuncioDAOImpl implements AnnuncioDAO{
 
 	private EntityManager entityManager;
+	
+	@Override
+	public void setEntityManager(EntityManager entityManager) {
+		this.entityManager=entityManager;
+	}
 
 	@Override
 	public List<Annuncio> list() throws Exception {
@@ -53,10 +58,7 @@ public class AnnuncioDAOImpl implements AnnuncioDAO{
 		entityManager.remove(entityManager.merge(input));
 	}
 
-	@Override
-	public void setEntityManager(EntityManager entityManager) {
-		this.entityManager=entityManager;
-	}
+
 
 	@Override
 	public List<Annuncio> findByExample(Annuncio example) throws Exception {
@@ -66,18 +68,18 @@ public class AnnuncioDAOImpl implements AnnuncioDAO{
 		StringBuilder queryBuilder = new StringBuilder("select a from Annuncio a join a.categorie c where a.id = a.id ");
 
 		if (StringUtils.isNotEmpty(example.getTestoAnnuncio())) {
-			whereClauses.add(" a.testoannuncio like :testo ");
-			paramaterMap.put("testo", "%" + example.getTestoAnnuncio() + "%");
+			whereClauses.add(" a.testoAnnuncio like :testoAnnuncio");
+			paramaterMap.put("testoAnnuncio", "%" + example.getTestoAnnuncio() + "%");
 		}
 		
 		if (example.getPrezzo() != null) {
-			whereClauses.add("a.prezzo >= :prezzo ");
-			paramaterMap.put("prezzo ", example.getPrezzo());
+			whereClauses.add("a.prezzo >= :prezzo");
+			paramaterMap.put("prezzo", example.getPrezzo());
 		}
 		
-		if (example.getCategorie().isEmpty()) {
+		if (!example.getCategorie().isEmpty()) {
 			for(Categoria item:example.getCategorie()) {
-				whereClauses.add(" c.id = :id");
+				whereClauses.add("c.id = :id");
 				paramaterMap.put("id", item.getId());
 			}
 

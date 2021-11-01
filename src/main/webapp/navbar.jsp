@@ -23,9 +23,7 @@
             <a class="nav-link dropdown-toggle" href="#" id="dropdown07" data-bs-toggle="dropdown" aria-expanded="false">Dropdown</a>
             <ul class="dropdown-menu" aria-labelledby="dropdown07">
               <li><a class="dropdown-item" href="${pageContext.request.contextPath}/home">Home</a></li>
-              <li><a class="dropdown-item" href="${pageContext.request.contextPath}/PrepareSearchRegistaServlet">Ricerca Registi</a></li>
-              <li><a class="dropdown-item" href="${pageContext.request.contextPath}/PrepareInsertRegistaServlet">Inserisci Regista</a></li>
-              <li><a class="dropdown-item" href="${pageContext.request.contextPath}/PrepareSearchFilmServlet">Ricerca Film</a></li>
+              <li><a class="dropdown-item" href="${pageContext.request.contextPath}/PrepareInsertAnnuncioServlet">Crea un annuncio</a></li>
               <li><a class="dropdown-item" href="${pageContext.request.contextPath}/PrepareInsertFilmServlet">Inserisci Film</a></li>
               <c:if test = "${userInfo.isAdmin()}">
               	<li><a class="dropdown-item" href="${pageContext.request.contextPath}/admin/PrepareSearchUtentiServlet">Ricerca Utenti</a></li>

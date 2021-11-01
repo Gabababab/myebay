@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import it.prova.myebay.model.Annuncio;
 import it.prova.myebay.service.MyServiceFactory;
+import it.prova.myebay.utility.UtilityForm;
 
 /**
  * Servlet implementation class ExecuteSearchAnnuncioServlet
@@ -31,10 +32,10 @@ public class ExecuteSearchAnnuncioServlet extends HttpServlet {
 		String prezzoParam=request.getParameter("prezzo");
 		String[] categorieParam = request.getParameterValues("categorieInput");
 		
-		Annuncio annuncioExample=new Annuncio(testoParam, Integer.parseInt(prezzoParam));
+		Annuncio annuncioExample=UtilityForm.createAnnuncioFromParams(testoParam, Integer.parseInt(prezzoParam), categorieParam);
+		
 			try {
 								
-				MyServiceFactory.getAnnuncioServiceInstance().aggiungiCategorieDaVettore(annuncioExample, categorieParam);
 				request.setAttribute("list_annuncio_attr", MyServiceFactory.getAnnuncioServiceInstance().findByExample(annuncioExample));
 			} catch (Exception e) {
 				e.printStackTrace();
