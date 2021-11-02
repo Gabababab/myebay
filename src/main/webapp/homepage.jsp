@@ -182,7 +182,7 @@
 						<p>Paragraph of text beneath the heading to explain the
 							heading. We'll add onto it with another sentence and probably
 							just keep going until we run out of words.</p>
-						<a href="PrepareSearchFilmServlet" class="icon-link"> Vai alla
+						<a href="${pageContext.request.contextPath}/admin/PrepareSearchUtenteServlet" class="icon-link"> Vai alla
 							funzionalità<svg class="bi" width="1em" height="1em">
 								<use xlink:href="#people-circle" /></svg>
 						</a>

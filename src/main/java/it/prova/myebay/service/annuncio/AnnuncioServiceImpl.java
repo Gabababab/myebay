@@ -1,19 +1,46 @@
 package it.prova.myebay.service.annuncio;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
 
+import it.prova.myebay.dao.acquisto.AcquistoDAO;
 import it.prova.myebay.dao.annuncio.AnnuncioDAO;
 import it.prova.myebay.dao.categoria.CategoriaDAO;
+import it.prova.myebay.dao.utente.UtenteDAO;
+import it.prova.myebay.model.Acquisto;
 import it.prova.myebay.model.Annuncio;
 import it.prova.myebay.model.Categoria;
+import it.prova.myebay.model.Utente;
 import it.prova.myebay.web.listener.LocalEntityManagerFactoryListener;
 
 public class AnnuncioServiceImpl implements AnnuncioService{
-
+	
 	private AnnuncioDAO annuncioDAO;
 	private CategoriaDAO categoriaDAO;
+	private UtenteDAO utenteDAO;
+	private AcquistoDAO acquistoDAO;
+
+	@Override
+	public void setAnnuncioDAO(AnnuncioDAO annuncioDAO) {
+		this.annuncioDAO = annuncioDAO;
+	}
+	
+	@Override
+	public void setAcquistoDAO(AcquistoDAO acquistoDAO) {
+		this.acquistoDAO = acquistoDAO;
+	}
+	
+	@Override
+	public void setUtenteDAO(UtenteDAO utenteDAO) {
+		this.utenteDAO = utenteDAO;
+	}
+
+	@Override
+	public void setCategoriaDAO(CategoriaDAO categoriaDAO) {
+		this.categoriaDAO = categoriaDAO;
+	}
 
 	@Override
 	public List<Annuncio> listAll() throws Exception {
@@ -145,10 +172,6 @@ public class AnnuncioServiceImpl implements AnnuncioService{
 		}
 	}
 
-	@Override
-	public void setAnnuncioDAO(AnnuncioDAO annuncioDAO) {
-		this.annuncioDAO = annuncioDAO;
-	}
 
 	@Override
 	public Annuncio cercaPerTestoECategoria(String testo, List<Categoria> categorie) throws Exception {
@@ -205,10 +228,6 @@ public class AnnuncioServiceImpl implements AnnuncioService{
 
 	}
 
-	@Override
-	public void setCategoriaDAO(CategoriaDAO categoriaDAO) {
-		this.categoriaDAO=categoriaDAO;
-	}
 
 	@Override
 	public List<Annuncio> findByExample(Annuncio example) throws Exception {
@@ -240,5 +259,45 @@ public class AnnuncioServiceImpl implements AnnuncioService{
 		} finally {
 			LocalEntityManagerFactoryListener.closeEntityManager(entityManager);
 		}
+	}
+	
+	@Override
+	public boolean compraAnnuncio(Utente utente, Annuncio annuncio) throws Exception {
+		
+		EntityManager entityManager = LocalEntityManagerFactoryListener.getEntityManager();
+
+		try {
+			// questo è come il MyConnection.getConnection()
+			entityManager.getTransaction().begin();
+
+			// uso l'injection per il dao
+			annuncioDAO.setEntityManager(entityManager);
+			utenteDAO.setEntityManager(entityManager);
+			acquistoDAO.setEntityManager(entityManager);
+
+			utente = utenteDAO.findOne(utente.getId()).get();
+			
+			if(utente.getCreditoResiduo() - annuncio.getPrezzo() < 0)
+				return false;
+			
+			utente.setCreditoResiduo(utente.getCreditoResiduo()-annuncio.getPrezzo());
+			annuncio.setAperto(false);
+			annuncioDAO.update(annuncio);
+			
+			Acquisto acquistoDaCreare = new Acquisto(annuncio.getTestoAnnuncio(), new Date(), annuncio.getPrezzo(), utente);
+			
+			acquistoDAO.insert(acquistoDaCreare);
+
+			entityManager.getTransaction().commit();
+			
+			return true;
+		} catch (Exception e) {
+			entityManager.getTransaction().rollback();
+			e.printStackTrace();
+			return false;
+		} finally {
+			LocalEntityManagerFactoryListener.closeEntityManager(entityManager);
+		}
+		
 	}
 }

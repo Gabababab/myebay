@@ -1,7 +1,6 @@
 package it.prova.myebay.web.servlet.acquisto;
 
 import java.io.IOException;
-import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -23,41 +22,37 @@ public class ExecuteEffettuaAcquistoServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		HttpServletRequest httpRequest = (HttpServletRequest) request;
-
-		String idAnnuncioParam = request.getParameter("idAnnuncio");
-		String prezzoParam = request.getParameter("prezzo");
-		Utente utenteCompratore = (Utente) httpRequest.getSession().getAttribute("userInfo");
-
+		
+		Long id = Long.parseLong(request.getParameter("idAnnuncio"));
+		
 		try {
-			Annuncio annuncioCompra = MyServiceFactory.getAnnuncioServiceInstance()
-					.caricaSingoloElemento(Long.parseLong(idAnnuncioParam));
+			
+			Annuncio annuncio = MyServiceFactory.getAnnuncioServiceInstance().caricaSingoloElemento(id);
+			Utente utente = (Utente)request.getSession().getAttribute("userInfo");
+			utente = MyServiceFactory.getUtenteServiceInstance().caricaSingoloElemento(utente.getId());
+			
+			if(MyServiceFactory.getAnnuncioServiceInstance().compraAnnuncio(utente, annuncio) == true) {
+				request.setAttribute("successMessage", "Acquisto effettuato.");
+				HttpServletRequest httpRequest = (HttpServletRequest) request;
+				Utente utenteInSessione = (Utente) httpRequest.getSession().getAttribute("userInfo");
+				Acquisto example = new Acquisto(utenteInSessione);
 
-			if (utenteCompratore.getCreditoResiduo() - Integer.parseInt(prezzoParam) < 0) {
-				request.setAttribute("dettaglio_annunci_attr", annuncioCompra);
-				request.setAttribute("errorMessage", "Credito Insufficiente.");
-				request.getRequestDispatcher("/annuncio/show.jsp").forward(request, response);
+				request.setAttribute("acquisto_list_attribute",
+						MyServiceFactory.getAcquistoServiceInstance().findByExampleEager(example));
+				request.getRequestDispatcher("/acquisto/listAcquistiUtente.jsp").forward(request, response);
 				return;
 			}
-			Acquisto acquistoEffettuato = new Acquisto(annuncioCompra.getTestoAnnuncio(), annuncioCompra.getPrezzo(),
-					new Date());
-			acquistoEffettuato.setUtenteAcquirente(utenteCompratore);
-
-			utenteCompratore.setCreditoResiduo(utenteCompratore.getCreditoResiduo() - Integer.parseInt(prezzoParam));
-			annuncioCompra.setAperto(false);
-
-			MyServiceFactory.getAcquistoServiceInstance().inserisciNuovo(acquistoEffettuato);
-			MyServiceFactory.getUtenteServiceInstance().aggiorna(utenteCompratore);
-			MyServiceFactory.getAnnuncioServiceInstance().aggiorna(annuncioCompra);
-
+			
+			request.setAttribute("errorMessage", "Acquisto non effettuato.");
+			request.getRequestDispatcher("").forward(request, response);
+			return;
+			
 		} catch (Exception e) {
 			e.printStackTrace();
-			request.setAttribute("errorMessage", "Attenzione, si è verificato un errore.");
-			request.getRequestDispatcher("/annuncio/show.jsp").forward(request, response);
+			request.setAttribute("errorMessage", "Attenzione si è verificato un errore.");
+			request.getRequestDispatcher("").forward(request, response);
 			return;
 		}
-		
-		request.getRequestDispatcher("/acquisto/listAcquistiUtente.jsp").forward(request, response);
 	}
 
 }

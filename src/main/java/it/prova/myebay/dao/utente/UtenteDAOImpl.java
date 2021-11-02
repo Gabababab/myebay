@@ -130,4 +130,11 @@ public class UtenteDAOImpl implements UtenteDAO{
 		return typedQuery.getResultList();
 	}
 
+	
+	@Override
+	public Utente caricaSingoloElementoConRuoli(Long id) {
+		
+		return entityManager.createQuery("from Utente u left join fetch u.ruoli where u.id = :idUtente", Utente.class)
+				.setParameter("idUtente", id).getSingleResult();
+	}
 }

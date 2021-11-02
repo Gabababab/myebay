@@ -9,4 +9,6 @@ public interface AcquistoDAO extends IBaseDAO<Acquisto>{
 
 	List<Acquisto> findByExample(Acquisto example) throws Exception;
 
+	List<Acquisto> findByExampleEager(Acquisto example) throws Exception;
+
 }

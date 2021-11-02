@@ -13,6 +13,8 @@ public interface UtenteService {
 	public List<Utente> listAll() throws Exception;
 
 	public Utente caricaSingoloElemento(Long id) throws Exception;
+	
+	public Utente caricaSingoloElementoConRuoli(Long id);
 
 	public void aggiorna(Utente utenteInstance) throws Exception;
 	
@@ -31,9 +33,14 @@ public interface UtenteService {
 	public Utente accedi(String username, String password) throws Exception;
 	
 	public List<Utente> findByExample(Utente example) throws Exception;
+	
+	
 
 	//per injection
 	public void setUtenteDAO(UtenteDAO utenteDAO);
 	
 	public void setRuoloDAO(RuoloDAO ruoloDAO);
+
+
+
 }

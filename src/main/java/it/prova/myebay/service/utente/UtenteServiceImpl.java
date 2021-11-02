@@ -269,4 +269,23 @@ public class UtenteServiceImpl implements UtenteService{
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public Utente caricaSingoloElementoConRuoli(Long id) {
+		EntityManager entityManager = LocalEntityManagerFactoryListener.getEntityManager();
+
+		try {
+			// uso l'injection per il dao
+			utenteDAO.setEntityManager(entityManager);
+
+			// eseguo quello che realmente devo fare
+			return utenteDAO.caricaSingoloElementoConRuoli(id);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			LocalEntityManagerFactoryListener.closeEntityManager(entityManager);
+		}
+	}
 }
