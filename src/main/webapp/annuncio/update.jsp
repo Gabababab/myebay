@@ -9,7 +9,7 @@
 	 	<!-- Common imports in pages -->
 	 	<jsp:include page="../header.jsp" />
 	   
-	   <title>Crea annuncio</title>
+	   <title>Modifica annuncio</title>
 	 </head>
 	   <body class="d-flex flex-column h-100">
 	   

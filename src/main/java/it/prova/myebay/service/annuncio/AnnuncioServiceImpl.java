@@ -79,13 +79,10 @@ public class AnnuncioServiceImpl implements AnnuncioService{
 		EntityManager entityManager = LocalEntityManagerFactoryListener.getEntityManager();
 
 		try {
-			// questo è come il MyConnection.getConnection()
 			entityManager.getTransaction().begin();
 
-			// uso l'injection per il dao
 			annuncioDAO.setEntityManager(entityManager);
 
-			// eseguo quello che realmente devo fare
 			annuncioDAO.update(annuncioInstance);
 
 			entityManager.getTransaction().commit();

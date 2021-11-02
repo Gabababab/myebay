@@ -59,7 +59,7 @@ public class UtilityForm {
 		// prima controlliamo che non siano vuoti i parametri
 		if (StringUtils.isBlank(annuncioToBeValidated.getTestoAnnuncio())
 				|| annuncioToBeValidated.getCategorie().isEmpty()
-				|| annuncioToBeValidated.getUtenteInserimento() == null || annuncioToBeValidated.getPrezzo() == null
+				|| annuncioToBeValidated.getId() == null || annuncioToBeValidated.getPrezzo() == null
 				|| annuncioToBeValidated.getDataPubblicazione() == null) {
 			return false;
 		}
@@ -93,34 +93,6 @@ public class UtilityForm {
 
 		return true;
 	}
-
-//	public static Film createFilmFromParams(String titoloInputParam, String genereInputParam,
-//			String minutiDurataInputParam, String dataPubblicazioneStringParam, String registaIdStringParam) {
-//
-//		Film result = new Film(titoloInputParam, genereInputParam);
-//		if (NumberUtils.isCreatable(minutiDurataInputParam)) {
-//			result.setMinutiDurata(Integer.parseInt(minutiDurataInputParam));
-//		}
-//		result.setDataPubblicazione(parseDateArrivoFromString(dataPubblicazioneStringParam));
-//		if (NumberUtils.isCreatable(registaIdStringParam)) {
-//			result.setRegista(new Regista(Long.parseLong(registaIdStringParam)));
-//		}
-//		return result;
-//	}
-
-//	public static boolean validateFilmBean(Film filmToBeValidated) {
-//		// prima controlliamo che non siano vuoti i parametri
-//		if (StringUtils.isBlank(filmToBeValidated.getTitolo())
-//				|| StringUtils.isBlank(filmToBeValidated.getGenere())
-//				|| filmToBeValidated.getMinutiDurata() == null 
-//				|| filmToBeValidated.getMinutiDurata() < 1
-//				|| filmToBeValidated.getRegista() == null
-//				|| filmToBeValidated.getRegista().getId() == null 
-//				|| filmToBeValidated.getRegista().getId() < 1) {
-//			return false;
-//		}
-//		return true;
-//	}
 
 	public static Date parseDateArrivoFromString(String dataDiNascitaStringParam) {
 

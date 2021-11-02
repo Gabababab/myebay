@@ -175,4 +175,12 @@ public class Utente {
 		
 		return true;
 	}
+	
+	public boolean isUser() {
+		for (Ruolo ruoloItem : ruoli) {
+			if (ruoloItem.getCodice().equals(Ruolo.ROLE_CLASSIC_USER) || ruoloItem.getCodice().equals(Ruolo.ROLE_ADMIN))
+				return true;
+		}
+		return false;
+	}
 }

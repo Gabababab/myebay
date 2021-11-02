@@ -17,7 +17,11 @@ public interface AcquistoService {
 	public void inserisciNuovo(Acquisto acquistoInstance) throws Exception;
 
 	public void rimuovi(Acquisto acquistoInstance) throws Exception;
+	
+	List<Acquisto> findByExample(Acquisto example) throws Exception;
 
 	// per injection
 	public void setAcquistoDAO(AcquistoDAO acquistoDAO);
+
+
 }

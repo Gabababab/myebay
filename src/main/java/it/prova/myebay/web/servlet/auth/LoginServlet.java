@@ -42,7 +42,7 @@ public class LoginServlet extends HttpServlet {
 				destinazione = "login.jsp";
 			} else {
 				request.getSession().setAttribute("userInfo", utenteInstance);
-				destinazione = "home";
+				destinazione = "/home";
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

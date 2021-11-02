@@ -1,7 +1,6 @@
 <%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@page import="it.prova.myebay.service.MyServiceFactory"%>
 <!doctype html>
 <html lang="it" class="h-100">
 <head>
@@ -9,7 +8,7 @@
 <!-- Common imports in pages -->
 <jsp:include page="../header.jsp" />
 
-<title>Pagina dei Risultati</title>
+<title>Cronologia Acquisti</title>
 </head>
 
 <body class="d-flex flex-column h-100">
@@ -29,10 +28,15 @@
 				<button type="button" class="btn-close" data-bs-dismiss="alert"
 					aria-label="Close"></button>
 			</div>
-			<div
-				class="alert alert-danger alert-dismissible fade show ${errorMessage==null?'d-none':'' }"
+			<div class="alert alert-danger alert-dismissible fade show d-none"
 				role="alert">
-				${errorMessage}
+				Esempio di operazione fallita!
+				<button type="button" class="btn-close" data-bs-dismiss="alert"
+					aria-label="Close"></button>
+			</div>
+			<div class="alert alert-info alert-dismissible fade show d-none"
+				role="alert">
+				Aggiungere d-none nelle class per non far apparire
 				<button type="button" class="btn-close" data-bs-dismiss="alert"
 					aria-label="Close"></button>
 			</div>
@@ -41,38 +45,39 @@
 
 			<div class='card'>
 				<div class='card-header'>
-					<h5>Lista dei risultati</h5>
+					<h5>Riepilogo acquisti</h5>
 				</div>
 				<div class='card-body'>
-					<a class="btn btn-primary " href="PrepareInsertAnnuncioServlet">Add
-						New</a>
 
 					<div class='table-responsive'>
 						<table class='table table-striped '>
 							<thead>
 								<tr>
-									<th>Testo</th>
+									<th>Acquisto</th>
 									<th>Prezzo</th>
-									<th>Data Pubblicazione</th>
-									<th>Azioni</th>
+									<th>Data di Acquisto</th>
+									<th>Proprietario dell'acquisto</th>
 								</tr>
 							</thead>
 							<tbody>
-								<c:forEach items="${list_annuncio_attr}" var="annuncioItem">
+								<c:forEach items="${acquisto_list_attribute }" var="acquistiItem">
 									<tr>
-										<td>${annuncioItem.testoAnnuncio }</td>
-										<td>${annuncioItem.prezzo}</td>
+										<td>${acquistiItem.descrizione }</td>
+										<td>${acquistiItem.prezzo }</td>
 										<td><fmt:formatDate type="date"
-												value="${annuncioItem.dataPubblicazione }" /></td>
-											<td>
-												<a class="btn  btn-sm btn-outline-secondary ml-2 mr-2" href="${pageContext.request.contextPath}/user/ExecuteVisualizzaAnnuncioServlet?idAnnuncio=${annuncioItem.id }">Visualizza</a>
-											</td>
+												value="${acquistiItem.dataAcquisto }" /></td>
+										<td>${acquistiItem.utenteAcquirente }</td>
 									</tr>
 								</c:forEach>
 							</tbody>
 						</table>
 					</div>
 
+					<div class='card-footer'>
+							<a href="/myebay/home" class='btn btn-navbar'>
+							<i class='fa fa-chevron-left'></i> Indietro
+						</a>
+					</div>
 					<!-- end card-body -->
 				</div>
 				<!-- end card -->

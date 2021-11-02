@@ -1,9 +1,15 @@
 package it.prova.myebay.dao.acquisto;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+
+import org.apache.commons.lang3.StringUtils;
 
 import it.prova.myebay.model.Acquisto;
 
@@ -49,6 +55,41 @@ public class AcquistoDAOImpl implements AcquistoDAO{
 	@Override
 	public void setEntityManager(EntityManager entityManager) {
 		this.entityManager=entityManager;
+	}
+	
+	@Override
+	public List<Acquisto> findByExample(Acquisto example) throws Exception {
+
+		Map<String, Object> paramaterMap = new HashMap<String, Object>();
+		List<String> whereClauses = new ArrayList<String>();
+
+		StringBuilder queryBuilder = new StringBuilder("select a from Acquisto a join a.utenteAcquirente u where a.id = a.id ");
+
+		if (StringUtils.isNotEmpty(example.getDescrizione())) {
+			whereClauses.add(" a.descrizione   like :descrizione  ");
+			paramaterMap.put("descrizione ", "%" + example.getDescrizione() + "%");
+		}
+
+//		if (example.getUtenteAcquirente().getId() != null) {
+//			whereClauses.add(" u.id = :utenteId ");
+//			paramaterMap.put("utenteId", "%" + example.getUtenteAcquirente().getId() + "%");
+//		}
+//		
+		if (example.getUtenteAcquirente()!= null) {
+			whereClauses.add(" a.utenteAcquirente = :utente ");
+			paramaterMap.put("utente",  example.getUtenteAcquirente() );
+		}
+
+		queryBuilder.append(!whereClauses.isEmpty() ? " and " : "");
+		queryBuilder.append(StringUtils.join(whereClauses, " and "));
+		TypedQuery<Acquisto> typedQuery = entityManager.createQuery(queryBuilder.toString(), Acquisto.class);
+
+		for (String key : paramaterMap.keySet()) {
+			typedQuery.setParameter(key, paramaterMap.get(key));
+		}
+
+		return typedQuery.getResultList();
+
 	}
 
 }

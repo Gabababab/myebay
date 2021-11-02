@@ -84,7 +84,7 @@
 								I campi con <span class="text-danger">*</span> sono obbligatori
 							</h6>
 
-							<form method="post" action="ExecuteSearchAnnuncioServlet"
+							<form method="post" action="${pageContext.request.contextPath}/user/ExecuteSearchAnnuncioServlet"
 								class="row g-3">
 
 
@@ -149,7 +149,7 @@
 					<p>Paragraph of text beneath the heading to explain the
 						heading. We'll add onto it with another sentence and probably just
 						keep going until we run out of words.</p>
-					<a href="PrepareListAcquistiServlet" class="icon-link"> Vai
+					<a href="${pageContext.request.contextPath}/user/ExecuteListAcquistiUtenteServlet" class="icon-link"> Vai
 						alla funzionalità <svg class="bi" width="1em" height="1em">
 							<use xlink:href="#chevron-right" /></svg>
 					</a>

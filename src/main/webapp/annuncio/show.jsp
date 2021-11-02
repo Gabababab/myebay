@@ -21,6 +21,14 @@
 	<main class="flex-shrink-0">
 		<div class="container">
 
+			<div
+				class="alert alert-danger alert-dismissible fade show ${errorMessage==null?'d-none':'' }"
+				role="alert">
+				${errorMessage}
+				<button type="button" class="btn-close" data-bs-dismiss="alert"
+					aria-label="Close"></button>
+			</div>
+			
 			<div class='card'>
 				<div class='card-header'>
 					<h5>Visualizza dettaglio</h5>
@@ -46,7 +54,8 @@
 					<dl class="row">
 						<dt class="col-sm-3 text-right">Data Inserimento:</dt>
 						<dd class="col-sm-9">
-							<fmt:formatDate type="date" value="${dettaglio_annuncio_attr.dataPubblicazione}" />
+							<fmt:formatDate type="date"
+								value="${dettaglio_annuncio_attr.dataPubblicazione}" />
 						</dd>
 					</dl>
 
@@ -68,18 +77,49 @@
 				<!-- end card body -->
 
 				<div class='card-footer'>
-					<a
-						href="${pageContext.request.contextPath}/user/ExecuteListAnnuncioServlet"
-						class='btn btn-outline-secondary' style='width: 150px'> <i
-						class='fa fa-chevron-left'></i> Torna ad annunci
-					</a>
+					<c:choose>
+						<c:when test="${userInfo.isUser() || userInfo.isAdmin() }">
+							<c:set
+								value="${pageContext.request.contextPath}/user/ExecuteEffettuaAcquistoServlet"
+								var="address"></c:set>
+						</c:when>
+						<c:otherwise>
+							<c:set
+								value="${pageContext.request.contextPath}/PrepareLoginServlet"
+								var="address"></c:set>
+						</c:otherwise>
+					</c:choose>
+
+					<form method="post" action="${address}" class="row g-3"
+						novalidate="novalidate">
+
+						<input type="hidden" name="idAnnuncio"
+							value="${dettaglio_annuncio_attr.id}"> <input
+							type="hidden" name="prezzo"
+							value="${dettaglio_annuncio_attr.prezzo}">
+
+
+						<div class="col-12">
+
+							<button type="submit" name="submit" value="submit" id="submit"
+								class="btn btn-outline-success">Compra</button>
+
+							<a
+								href="${pageContext.request.contextPath}/user/ExecuteListAnnuncioServlet"
+								class='btn btn-outline-secondary' style='width: 150px'> <i
+								class='fa fa-chevron-left'></i> Torna ad annunci
+							</a>
+						</div>
+					</form>
 				</div>
-				<!-- end card -->
+
 			</div>
+			<!-- end card -->
 
-
-			<!-- end container -->
 		</div>
+
+
+		<!-- end container -->
 
 	</main>
 
