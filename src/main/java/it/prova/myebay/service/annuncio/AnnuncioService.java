@@ -26,9 +26,15 @@ public interface AnnuncioService {
 	public void aggiungiCategorieDaVettore(Annuncio annuncioIntance, String[] categorieInstance) throws Exception;
 	
 	public List<Annuncio> findByExample(Annuncio example) throws Exception;
+	
+	List<Annuncio> findByExampleEager(Annuncio example) throws Exception;
+
+	Annuncio caricaSingoloElementoEager(Long id) throws Exception;
 
 	// per injection
 	public void setAnnuncioDAO(AnnuncioDAO annuncioDAO);
 	
 	public void setCategoriaDAO(CategoriaDAO categoriaDAO);
+
+
 }

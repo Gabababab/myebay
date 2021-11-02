@@ -19,9 +19,11 @@ import it.prova.myebay.model.Utente;
 public class CheckAuthFilter implements Filter {
 
 	private static final String HOME_PATH = "";
-	private static final String[] EXCLUDED_URLS = {"/login.jsp","/LoginServlet","/LogoutServlet","/assets/", "/homepage.jsp", "/ExecuteSearchAnnuncioServlet",  "/ExecuteListAnnuncioServlet"};
+	private static final String[] EXCLUDED_URLS = {"/login.jsp","/LoginServlet","/LogoutServlet","/assets/", "/homepage.jsp", "/ExecuteSearchAnnuncioServlet",  "/annuncio/list.jsp",  "ExecuteListAnnuncioServlet", "PrepareUpdateAnnuncioServlet", "ExecuteUpdateAnnuncioServlet"};
 	
 	private static final String[] PROTECTED_URLS = {"/admin/"};
+	
+	private static final String[] PROTECTED_URLS_USER = {"/user/"};
 
 	public CheckAuthFilter() {
 	}
@@ -75,6 +77,20 @@ public class CheckAuthFilter implements Filter {
 	}
 	
 	private boolean isPathForOnlyAdministrators(String requestPath) {
+		for (String urlPatternItem : PROTECTED_URLS) {
+			if (requestPath.contains(urlPatternItem)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	private boolean isPathForOnlyUser(String requestPath) {
+		for (String urlPatternItem : PROTECTED_URLS_USER) {
+			if (requestPath.contains(urlPatternItem)) {
+				return true;
+			}
+		}
 		for (String urlPatternItem : PROTECTED_URLS) {
 			if (requestPath.contains(urlPatternItem)) {
 				return true;

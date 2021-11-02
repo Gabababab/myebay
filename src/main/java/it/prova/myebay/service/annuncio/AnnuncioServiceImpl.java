@@ -54,6 +54,25 @@ public class AnnuncioServiceImpl implements AnnuncioService{
 			LocalEntityManagerFactoryListener.closeEntityManager(entityManager);
 		}
 	}
+	
+	@Override
+	public Annuncio caricaSingoloElementoEager(Long id) throws Exception {
+		EntityManager entityManager = LocalEntityManagerFactoryListener.getEntityManager();
+
+		try {
+			// uso l'injection per il dao
+			annuncioDAO.setEntityManager(entityManager);
+
+			// eseguo quello che realmente devo fare
+			return annuncioDAO.findOneEager(id).orElse(null);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			LocalEntityManagerFactoryListener.closeEntityManager(entityManager);
+		}
+	}
 
 	@Override
 	public void aggiorna(Annuncio annuncioInstance) throws Exception {
@@ -210,4 +229,19 @@ public class AnnuncioServiceImpl implements AnnuncioService{
 		}
 	}
 
+	@Override
+	public List<Annuncio> findByExampleEager(Annuncio example) throws Exception {
+		EntityManager entityManager = LocalEntityManagerFactoryListener.getEntityManager();
+
+		try {
+			annuncioDAO.setEntityManager(entityManager);
+
+			return annuncioDAO.findByExampleEager(example);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		} finally {
+			LocalEntityManagerFactoryListener.closeEntityManager(entityManager);
+		}
+	}
 }

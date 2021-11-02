@@ -161,20 +161,15 @@
 						<svg class="bi" width="1em" height="1em">
 							<use xlink:href="#collection" /></svg>
 					</div>
-					<form
-						action="ExecuteListAnnunciUtenteServlet?idUser=${userInfo.id}"
-						method="post">
+
 						<h2>Gestione Annunci</h2>
 						<p>Paragraph of text beneath the heading to explain the
 							heading. We'll add onto it with another sentence and probably
 							just keep going until we run out of words.</p>
-
-
-						<button type="submit" name="submit" value="submit" id="submit"
-							class="btn btn-primary">Vai alla funzionalità</button>
-
-					</form>
-
+						<a href="ExecuteListAnnunciUtenteServlet" class="icon-link"> Vai
+						alla funzionalità <svg class="bi" width="1em" height="1em">
+							<use xlink:href="#chevron-right" /></svg>
+						</a>
 				</div>
 				<c:if test="${userInfo.isAdmin()}">
 					<div class="feature col">

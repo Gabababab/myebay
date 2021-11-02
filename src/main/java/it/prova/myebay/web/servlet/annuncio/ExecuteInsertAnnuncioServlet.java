@@ -58,7 +58,7 @@ public class ExecuteInsertAnnuncioServlet extends HttpServlet {
 			return;
 		}
 
-		response.sendRedirect("ExecuteListAnnuncioServlet?operationResult=SUCCESS");
+		response.sendRedirect("/user/ExecuteListAnnuncioServlet?operationResult=SUCCESS");
 
 	}
 

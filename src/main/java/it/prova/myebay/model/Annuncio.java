@@ -98,6 +98,12 @@ public class Annuncio {
 
 
 
+	public Annuncio(Utente utente) {
+		this.utenteInserimento=utente;
+	}
+
+
+
 	public Long getId() {
 		return id;
 	}

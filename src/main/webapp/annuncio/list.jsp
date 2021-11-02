@@ -54,7 +54,6 @@
 									<th>Testo</th>
 									<th>Prezzo</th>
 									<th>Data Pubblicazione</th>
-									<th>Utente Venditore</th>
 									<th>Azioni</th>
 								</tr>
 							</thead>
@@ -65,14 +64,13 @@
 										<td>${annuncioItem.prezzo}</td>
 										<td><fmt:formatDate type="date"
 												value="${annuncioItem.dataPubblicazione }" /></td>
-										<td>${MyServiceFactory.getUtenteServiceInstance().caricaSingoloElemento(annuncioItem.utenteInserimento).nome}</td>
-										<td><a class="btn  btn-sm btn-outline-secondary"
-											href="ExecuteVisualizzaFilmServlet?idFilm=${filmItem.id }">Visualizza</a>
-											<a class="btn  btn-sm btn-outline-primary ml-2 mr-2"
-											href="PrepareEditFilmServlet?idFilm=${filmItem.id }">Edit</a>
-											<a class="btn btn-outline-danger btn-sm"
-											href="PrepareDeleteFilmServlet?idFilm=${filmItem.id }">Delete</a>
-										</td>
+											<td>
+												<a class="btn  btn-sm btn-outline-secondary ml-2 mr-2" href="${pageContext.request.contextPath}/user/ExecuteVisualizzaAnnuncioServlet?idAnnuncio=${annuncioItem.id }">Visualizza</a>
+												<c:if test="${annuncioItem.aperto}">
+												<a class="btn  btn-sm btn-outline-primary ml-2 mr-2" href="${pageContext.request.contextPath}/user/PrepareUpdateAnnuncioServlet?idAnnuncio=${annuncioItem.id }">Edit</a>
+												<a class="btn btn-outline-danger btn-sm" href="${pageContext.request.contextPath}/user/PrepareDeleteAnnuncioServlet?idAnnuncio=${annuncioItem.id }">Delete</a>
+												</c:if>
+											</td>
 									</tr>
 								</c:forEach>
 							</tbody>

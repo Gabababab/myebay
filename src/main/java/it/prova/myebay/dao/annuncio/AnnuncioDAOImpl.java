@@ -33,6 +33,12 @@ public class AnnuncioDAOImpl implements AnnuncioDAO{
 		Annuncio result = entityManager.find(Annuncio.class, id);
 		return result != null ? Optional.of(result) : Optional.empty();
 	}
+	
+	@Override
+	public Optional<Annuncio> findOneEager(Long id) throws Exception {
+		return entityManager.createQuery("from Annuncio a left join fetch a.categorie c where a.id=:idAnnuncio", Annuncio.class)
+				.setParameter("idAnnuncio", id).getResultList().stream().findFirst();
+	}
 
 	@Override
 	public void update(Annuncio input) throws Exception {
@@ -87,6 +93,41 @@ public class AnnuncioDAOImpl implements AnnuncioDAO{
 		
 		
 		queryBuilder.append(!whereClauses.isEmpty()?" and ":"");
+		queryBuilder.append(StringUtils.join(whereClauses, " and "));
+		TypedQuery<Annuncio> typedQuery = entityManager.createQuery(queryBuilder.toString(), Annuncio.class);
+
+		for (String key : paramaterMap.keySet()) {
+			typedQuery.setParameter(key, paramaterMap.get(key));
+		}
+
+		return typedQuery.getResultList();
+	}
+	
+	@Override
+	public List<Annuncio> findByExampleEager(Annuncio example) throws Exception {
+		Map<String, Object> paramaterMap = new HashMap<String, Object>();
+		List<String> whereClauses = new ArrayList<String>();
+
+		StringBuilder queryBuilder = new StringBuilder("select a from Annuncio a join a.utenteInserimento u where a.id = a.id ");
+
+		if (StringUtils.isNotEmpty(example.getTestoAnnuncio())) {
+			whereClauses.add(" a.testoAnnuncio  like :testoAnnuncio ");
+			paramaterMap.put("testoAnnuncio", "%" + example.getTestoAnnuncio() + "%");
+		}
+		if (example.getPrezzo() != null) {
+			whereClauses.add("a.prezzo >= :prezzo ");
+			paramaterMap.put("prezzo", example.getPrezzo());
+		}
+		if (example.getDataPubblicazione() != null) {
+			whereClauses.add("a.dataPubblicazione >= :data ");
+			paramaterMap.put("data", example.getDataPubblicazione());
+		}
+		if (example.getUtenteInserimento().getId() != null) {
+			whereClauses.add("u.id = :idUtente ");
+			paramaterMap.put("idUtente", example.getUtenteInserimento().getId());
+		}
+
+		queryBuilder.append(!whereClauses.isEmpty() ? " and " : "");
 		queryBuilder.append(StringUtils.join(whereClauses, " and "));
 		TypedQuery<Annuncio> typedQuery = entityManager.createQuery(queryBuilder.toString(), Annuncio.class);
 

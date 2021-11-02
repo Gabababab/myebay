@@ -51,17 +51,17 @@
 				                    </tr>
 				                </thead>
 				                <tbody>
-				                	<c:forEach items="${list_annunci_utente_attr.annunci}" var="annuncioItem">
+				                	<c:forEach items="${annuncio_list_attribute}" var="annuncioItem">
 										<tr>
 											<td>${annuncioItem.testoAnnuncio }</td>
-											<c:forEach items="${annuncioItem.categorie}" var="categoriaItem">
-											<td>${categoriaItem.descrizione}</td>
-											</c:forEach>
+											<td>${annuncioItem.prezzo}</td>
 											<td><fmt:formatDate type = "date" value = "${annuncioItem.dataPubblicazione }" /></td>
 											<td>
-												<a class="btn  btn-sm btn-outline-secondary" href="ExecuteVisualizzaFilmServlet?idFilm=${filmItem.id }">Visualizza</a>
-												<a class="btn  btn-sm btn-outline-primary ml-2 mr-2" href="PrepareEditFilmServlet?idFilm=${filmItem.id }">Edit</a>
-												<a class="btn btn-outline-danger btn-sm" href="PrepareDeleteFilmServlet?idFilm=${filmItem.id }">Delete</a>
+												<a class="btn  btn-sm btn-outline-secondary ml-2 mr-2" href="${pageContext.request.contextPath}/user/ExecuteVisualizzaAnnuncioServlet?idAnnuncio=${annuncioItem.id }">Visualizza</a>
+												<c:if test="${annuncioItem.aperto}">
+												<a class="btn  btn-sm btn-outline-primary ml-2 mr-2" href="${pageContext.request.contextPath}/user/PrepareUpdateAnnuncioServlet?idAnnuncio=${annuncioItem.id }">Edit</a>
+												<a class="btn btn-outline-danger btn-sm" href="${pageContext.request.contextPath}/user/PrepareDeleteAnnuncioServlet?idAnnuncio=${annuncioItem.id }">Delete</a>
+												</c:if>
 											</td>
 										</tr>
 									</c:forEach>
